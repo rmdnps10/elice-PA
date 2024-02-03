@@ -6,7 +6,7 @@ export const GlobalStyles = createGlobalStyle`
     html{
         font-size:10px;
     }
-    body{
+    body,div,p,header{
         font-family: "Pretendard";
         box-sizing: border-box;
     }

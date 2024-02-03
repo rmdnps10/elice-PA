@@ -1,11 +1,16 @@
+import CategorySelectSection from 'components/CategorySelectSection';
 import Header from 'components/Header';
 import React from 'react';
 
 function App() {
   return (
-    <div className="App">
+    <>
       <Header />
-    </div>
+      <main>
+        <CategorySelectSection />
+      </main>
+      <footer></footer>
+    </>
   );
 }
 

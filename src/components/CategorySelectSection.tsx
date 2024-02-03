@@ -4,6 +4,30 @@ import styled from 'styled-components';
 import Space from 'util/Space';
 
 function CategorySelectSection() {
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(
+        'https://api-rest.elice.io/org/academy/course/list/',
+        {
+          params: {
+            offset: 0,
+            count: 20,
+            and: [
+              { title: 'c언어' },
+              {
+                or: [
+                  { enroll_type: 0, is_free: true },
+                  { enroll_type: 0, is_free: false },
+                ],
+              },
+            ],
+          },
+        },
+      );
+      console.log(res);
+    };
+    fetchData();
+  }, []);
   return (
     <>
       <Space height="6.4rem" />

@@ -4,7 +4,7 @@ import axios from 'api/instance';
 import ResultCard from './molecules/ResultCard';
 import PaginationList from './molecules/PaginationList';
 import { Course } from 'util/type';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { pageNumAtom, searchTextAtom } from 'state/atom';
 import Space from 'util/Space';
 import { useLocation } from 'react-router-dom';
@@ -14,7 +14,7 @@ import NoResultSection from './NoResultSection';
 function ResultSection() {
   const [totalCount, setTotalCount] = useState<number | undefined>();
   const [courses, setCourses] = useState<Course[]>();
-  const pageNum = useRecoilValue(pageNumAtom);
+  const [pageNum, setPageNum] = useRecoilState(pageNumAtom);
   const { search } = useLocation();
   const searchText = useRecoilValue(searchTextAtom);
   const fetchData = async () => {
@@ -59,6 +59,7 @@ function ResultSection() {
   const debounceFunc = useDebounce(fetchData, 1000);
   useEffect(() => {
     debounceFunc();
+    setPageNum(1);
   }, [searchText]);
   useEffect(() => {
     window.scrollTo(0, 500);

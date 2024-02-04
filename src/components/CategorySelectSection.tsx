@@ -1,10 +1,32 @@
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Space from 'util/Space';
 import { filterListByCategory } from 'util/filterListByCategory';
 
 function CategorySelectSection() {
+  const [filterList, setFilterList] = useState<any>({
+    courseType: [],
+    format: [],
+    category: [],
+    level: [],
+    programmingLanguage: [],
+    price: [],
+  });
+  const handleClickFilter = (filterItem: string, category: string) => {
+    let copyArray = [...filterList[category]];
+    if (copyArray.includes(filterItem)) {
+      // copyArray 배열에서 filterItem을 삭제
+      copyArray = copyArray.filter((item) => item !== filterItem);
+    } else {
+      // copyArray에서 filterItem을 추가
+      copyArray = [...copyArray, filterItem];
+    }
+    setFilterList({
+      ...filterList,
+      [category]: copyArray,
+    });
+  };
   return (
     <>
       <Space height="6.4rem" />
@@ -18,7 +40,15 @@ function CategorySelectSection() {
             <FilterCategory>유형</FilterCategory>
             <FilterList>
               {filterListByCategory?.courseType.map((item) => (
-                <FilterItem key={item}>{item}</FilterItem>
+                <FilterItem
+                  key={item}
+                  onClick={() => {
+                    handleClickFilter(item, 'courseType');
+                  }}
+                  isSelected={filterList.courseType.includes(item)}
+                >
+                  {item}
+                </FilterItem>
               ))}
             </FilterList>
           </FilterBoxRow>
@@ -26,7 +56,15 @@ function CategorySelectSection() {
             <FilterCategory>진행방식</FilterCategory>
             <FilterList>
               {filterListByCategory?.format.map((item) => (
-                <FilterItem key={item}>{item}</FilterItem>
+                <FilterItem
+                  key={item}
+                  onClick={() => {
+                    handleClickFilter(item, 'format');
+                  }}
+                  isSelected={filterList.format.includes(item)}
+                >
+                  {item}
+                </FilterItem>
               ))}
             </FilterList>
           </FilterBoxRow>
@@ -34,7 +72,15 @@ function CategorySelectSection() {
             <FilterCategory>분야</FilterCategory>
             <FilterList>
               {filterListByCategory?.category.map((item) => (
-                <FilterItem key={item}>{item}</FilterItem>
+                <FilterItem
+                  key={item}
+                  onClick={() => {
+                    handleClickFilter(item, 'category');
+                  }}
+                  isSelected={filterList.category.includes(item)}
+                >
+                  {item}
+                </FilterItem>
               ))}
             </FilterList>
           </FilterBoxRow>
@@ -50,7 +96,15 @@ function CategorySelectSection() {
             <FilterCategory>언어</FilterCategory>
             <FilterList>
               {filterListByCategory?.programmingLanguage.map((item) => (
-                <FilterItem key={item}>{item}</FilterItem>
+                <FilterItem
+                  key={item}
+                  onClick={() => {
+                    handleClickFilter(item, 'programmingLanguage');
+                  }}
+                  isSelected={filterList.programmingLanguage.includes(item)}
+                >
+                  {item}
+                </FilterItem>
               ))}
             </FilterList>
           </FilterBoxRow>
@@ -58,7 +112,15 @@ function CategorySelectSection() {
             <FilterCategory>가격</FilterCategory>
             <FilterList>
               {filterListByCategory?.price.map((item) => (
-                <FilterItem key={item}>{item}</FilterItem>
+                <FilterItem
+                  key={item}
+                  onClick={() => {
+                    handleClickFilter(item, 'price');
+                  }}
+                  isSelected={filterList.price.includes(item)}
+                >
+                  {item}
+                </FilterItem>
               ))}
             </FilterList>
           </FilterBoxRow>
@@ -105,7 +167,7 @@ const FilterCategory = styled.div`
   background: #f9fafc;
   border-right: 1px solid rgb(225, 226, 228);
   color: #5e5f61;
-  min-width: 6rem;
+  min-width: 9.6rem;
   font-weight: 600;
 `;
 
@@ -118,16 +180,16 @@ const FilterList = styled.div`
   flex-wrap: wrap;
 `;
 
-const FilterItem = styled.div`
+const FilterItem = styled.div<{ isSelected?: boolean }>`
   padding: 0.4rem 1.2rem;
   font-size: 1.4rem;
   margin: 0.8rem;
   line-height: 150%;
   font-weight: 400;
   border-radius: 1.875rem;
-  background: #f0f1f3;
+  background: ${(props) => (props?.isSelected ? '#524fa1' : '#f0f1f3')};
   cursor: pointer;
-  color: #5e5f61;
+  color: ${(props) => (props?.isSelected ? 'white' : '#5e5f61')};
 `;
 
 export default CategorySelectSection;

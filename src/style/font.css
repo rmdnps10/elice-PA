@@ -21,7 +21,7 @@
   font-weight: 500;
   font-display: swap;
   src:
-    local('PretendardRegular'),
+    local('PretendardMedium'),
     url('../assets/fonts/Pretendard-Medium.woff2') format('woff2');
 }
 

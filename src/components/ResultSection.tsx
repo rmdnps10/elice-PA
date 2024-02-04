@@ -9,6 +9,7 @@ import { pageNumAtom, searchTextAtom } from 'state/atom';
 import Space from 'util/Space';
 import { useLocation } from 'react-router-dom';
 import useDebounce from 'hook/useDebounce';
+import NoResultSection from './NoResultSection';
 
 function ResultSection() {
   const [totalCount, setTotalCount] = useState<number | undefined>();
@@ -61,14 +62,24 @@ function ResultSection() {
   }, [searchText]);
   return (
     <ResultSectionWrapper>
-      <TotalCount>전체 {totalCount}개</TotalCount>
-      <ResultCardList>
-        {courses?.map((item: Course) => (
-          <ResultCard key={item?.id} course={item} />
-        ))}
-      </ResultCardList>
       <Space height="2.4rem" />
-      {totalCount !== undefined && <PaginationList totalCount={totalCount} />}
+      {totalCount !== undefined && (
+        <>
+          {totalCount === 0 ? (
+            <NoResultSection />
+          ) : (
+            <>
+              <TotalCount>전체 {totalCount}개</TotalCount>
+              <ResultCardList>
+                {courses?.map((item: Course) => (
+                  <ResultCard key={item?.id} course={item} />
+                ))}
+              </ResultCardList>{' '}
+              <PaginationList totalCount={totalCount} />
+            </>
+          )}
+        </>
+      )}
     </ResultSectionWrapper>
   );
 }

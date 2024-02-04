@@ -14,7 +14,7 @@ function ResultCard({ course }: ResultCardProps) {
         <ResultCardImg $imageUrl={course?.image_file_url ?? NoImageUrl} />
       </ResultCardImgBox>
       <CardTextBox>
-        <CardType>{course?.class_type}</CardType>
+        <CardType>미설정</CardType>
         <Space height="0.5rem" />
         <Title>{course?.title}</Title>
         <Space height="0.5rem" />
@@ -82,7 +82,7 @@ const CardTextBox = styled.div`
 const CardType = styled.div`
   color: #524fa1;
   font-weight: 700;
-  font-size: 0.75rem;
+  font-size: 1.3rem;
 `;
 const Title = styled.div`
   display: -webkit-box;

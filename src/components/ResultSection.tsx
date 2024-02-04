@@ -4,16 +4,15 @@ import axios from 'api/instance';
 import ResultCard from './ResultCard';
 import PaginationList from './PaginationList';
 import { Course } from 'util/type';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { pageNumAtom } from 'state/atom';
 import Space from 'util/Space';
 import { useLocation } from 'react-router-dom';
-import { serialize } from 'v8';
 
 function ResultSection() {
   const [totalCount, setTotalCount] = useState<number | undefined>();
   const [courses, setCourses] = useState<Course[]>();
-  const [pageNum, setPageNum] = useRecoilState(pageNumAtom);
+  const pageNum = useRecoilValue(pageNumAtom);
   const { search } = useLocation();
   useEffect(() => {
     const fetchData = async () => {

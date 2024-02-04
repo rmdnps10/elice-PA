@@ -1,8 +1,12 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Search } from 'assets/icon/search.svg';
 import Space from 'util/Space';
+import { useRecoilState } from 'recoil';
+import { searchTextAtom } from 'state/atom';
+
 function SearchInput() {
+  const [text, setText] = useRecoilState(searchTextAtom);
   const [isFocus, setIsFocus] = useState(false);
   return (
     <>
@@ -19,7 +23,11 @@ function SearchInput() {
             onBlur={() => {
               setIsFocus(false);
             }}
+            value={text}
             type="text"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setText(e.target.value)
+            }
             placeholder="배우고 싶은 언어, 기술을 검색해보세요."
           />
         </SearchPureInputBox>

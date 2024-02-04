@@ -13,6 +13,7 @@ function CategorySelectSection() {
     isFree: false,
     isFare: false,
   });
+  const [text, setText] = useState('');
   const handleClickFilter = (item: string) => {
     if (item === '유료') {
       setPriceFilter({ ...priceFilter, isFare: !priceFilter.isFare });
@@ -119,14 +120,6 @@ const IndicateBox = styled.a`
   font-size: 1.6rem;
   border-bottom: 4px solid #524fa1;
   font-weight: 600;
-`;
-const ImpactMessage = styled.div`
-  display: flex;
-  height: 7.8rem;
-  align-items: center;
-  font-size: 1.8rem;
-  font-weight: 400;
-  color: #7d7e80;
 `;
 
 const FilterBox = styled.div`

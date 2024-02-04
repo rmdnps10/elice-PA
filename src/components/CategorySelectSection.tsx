@@ -16,13 +16,24 @@ function CategorySelectSection() {
   const handleClickFilter = (item: string) => {
     if (item === '유료') {
       setPriceFilter({ ...priceFilter, isFare: !priceFilter.isFare });
-    } else {
+    } else if (item === '무료') {
       setPriceFilter({ ...priceFilter, isFree: !priceFilter.isFree });
+    } else {
+      return;
     }
   };
   useEffect(() => {
     navigate('?' + qs.stringify(priceFilter));
   }, [priceFilter]);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(search);
+    const priceArray = [searchParams.get('isFare'), searchParams.get('isFree')];
+    setPriceFilter({
+      isFree: searchParams.get('isFare') === 'true',
+      isFare: searchParams.get('isFree') === 'true',
+    });
+  }, []);
   return (
     <>
       <Space height="6.4rem" />

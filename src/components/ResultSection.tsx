@@ -18,20 +18,22 @@ function ResultSection() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const urlSearch = new URLSearchParams(search);
-
-        const orParams = urlSearch?.getAll('price')?.map((item) => {
+        const searchParams = new URLSearchParams(search);
+        const priceArray = [
+          searchParams.get('isFare'),
+          searchParams.get('isFree'),
+        ];
+        const orParams = priceArray.map((item) => {
           return {
             enroll_type: 0,
-            is_free: item === 'free' ? 'true' : 'false',
+            is_free: item,
           };
         });
-        console.log(orParams);
         const res = await axios.get(
           'https://api-rest.elice.io/org/academy/course/list/',
           {
             params: {
-              and: [{ title: '' }, { or: orParams }],
+              and: [{ title: '아메리카노' }, { or: orParams }],
               offset: 20 * (pageNum - 1), // offset 값 수정
               count: 20,
             },

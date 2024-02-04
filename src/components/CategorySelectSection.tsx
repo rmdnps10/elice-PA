@@ -1,10 +1,10 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Space from 'util/Space';
 import { filterListByCategory } from 'util/filterListByCategory';
 import qs from 'query-string';
+import SearchInput from './SearchInput';
 
 function CategorySelectSection() {
   const { search } = useLocation();
@@ -38,9 +38,7 @@ function CategorySelectSection() {
       <Space height="6.4rem" />
       <CategorySelectSectionWrapper>
         <IndicateBox>과목</IndicateBox>
-        <ImpactMessage>
-          엘리스에서 배우고자 하는 과목의 특성을 선택해주세요.
-        </ImpactMessage>
+        <SearchInput />
         <FilterBox>
           <FilterBoxRow>
             <FilterCategory>유형</FilterCategory>

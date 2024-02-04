@@ -22,6 +22,7 @@ function PaginationList({ totalCount }: PaginationProps) {
         <LeftArrowIcon
           onClick={() => {
             setPageNum(pageNum - 1);
+            window.scrollTo(0, 500);
           }}
         />
       )}
@@ -32,6 +33,7 @@ function PaginationList({ totalCount }: PaginationProps) {
               $isActive={page === pageNum}
               onClick={() => {
                 setPageNum(page);
+                window.scrollTo(0, 500);
               }}
             >
               {page}
@@ -43,6 +45,7 @@ function PaginationList({ totalCount }: PaginationProps) {
               $isActive={page === pageNum}
               onClick={() => {
                 setPageNum(page);
+                window.scrollTo(0, 500);
               }}
             >
               {page}
@@ -54,6 +57,7 @@ function PaginationList({ totalCount }: PaginationProps) {
         <RightArrowIcon
           onClick={() => {
             setPageNum(pageNum + 1);
+            window.scrollTo(0, 500);
           }}
         />
       )}

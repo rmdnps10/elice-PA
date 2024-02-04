@@ -61,9 +61,7 @@ function ResultSection() {
     debounceFunc();
     setPageNum(1);
   }, [searchText]);
-  useEffect(() => {
-    window.scrollTo(0, 500);
-  }, [pageNum]);
+
   return (
     <ResultSectionWrapper>
       <Space height="2.4rem" />

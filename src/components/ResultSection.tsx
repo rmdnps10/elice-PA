@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'api/instance';
 import ResultCard from './ResultCard';
+import PaginationList from './PaginationList';
 import { Course } from 'util/type';
+import { useRecoilState } from 'recoil';
+import { pageNumAtom } from 'state/atom';
+import Space from 'util/Space';
 
 function ResultSection() {
-  const [totalCount, setTotalCount] = useState<number>();
+  const [totalCount, setTotalCount] = useState<number | undefined>();
   const [courses, setCourses] = useState<Course[]>();
   useEffect(() => {
     const fetchData = async () => {
@@ -35,6 +39,8 @@ function ResultSection() {
           <ResultCard key={item?.id} course={item} />
         ))}
       </ResultCardList>
+      <Space height="2.4rem" />
+      {totalCount !== undefined && <PaginationList totalCount={totalCount} />}
     </ResultSectionWrapper>
   );
 }

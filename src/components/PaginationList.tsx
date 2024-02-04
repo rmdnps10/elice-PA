@@ -14,6 +14,7 @@ function PaginationList({ totalCount }: PaginationProps) {
   const pageCount = Math.ceil(totalCount / 20);
   const pages = Array.from({ length: pageCount }, (_, index) => index + 1);
   const [pageNum, setPageNum] = useRecoilState(pageNumAtom);
+  console.log(pageNum, pageCount);
   return (
     <PaginationListWrapper>
       {pageNum === 1 ? (
@@ -25,18 +26,29 @@ function PaginationList({ totalCount }: PaginationProps) {
           }}
         />
       )}
-
-      {pages.slice(0, 5).map((page) => (
-        <PageNum
-          key={page}
-          $isActive={page === pageNum}
-          onClick={() => {
-            setPageNum(page);
-          }}
-        >
-          {page}
-        </PageNum>
-      ))}
+      {pageNum - 3 < 0
+        ? pages.slice(0, 5).map((page) => (
+            <PageNum
+              key={page}
+              $isActive={page === pageNum}
+              onClick={() => {
+                setPageNum(page);
+              }}
+            >
+              {page}
+            </PageNum>
+          ))
+        : pages.slice(pageNum - 3, pageNum + 2).map((page) => (
+            <PageNum
+              key={page}
+              $isActive={page === pageNum}
+              onClick={() => {
+                setPageNum(page);
+              }}
+            >
+              {page}
+            </PageNum>
+          ))}
       {pageNum === pageCount ? (
         <RightArrowIconInactive />
       ) : (
@@ -72,7 +84,7 @@ const RightArrowIcon = styled(RightArrow)`
   cursor: pointer;
   margin: 0 0 0 0.6rem;
 `;
-const RightArrowIconInactive = styled(RightArrowIcon)`
+const RightArrowIconInactive = styled(RightArrowInactive)`
   width: 1.1rem;
   cursor: pointer;
   margin: 0 0 0 0.6rem;

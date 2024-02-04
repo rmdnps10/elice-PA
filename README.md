@@ -1,6 +1,6 @@
 # Elice Programming Assingnment
 
-[elice-PA 배포링크](https://my-blog-4v4sg8x0e-rmdnps10.vercel.app/?isFare=false&isFree=false)
+[elice-PA 배포링크](https://my-blog-h13ijfjwe-rmdnps10.vercel.app/?isFare=false&isFree=false)
 
 ## 🚀 사용한 기술 스택
 
@@ -24,18 +24,13 @@
 - style: 프로젝트에 전역으로 적용한 스타일을 보관합니다.
 - util: 그 외에 유용한 함수, 타입 선언, 맵핑에 필요한 객체 등을 보관합니다.
 
+## 구현 사진
 
-
-
-## 구현 사진 
 (1200px 이상)
-  <img width="1587" alt="스크린샷 2024-02-05 오전 8 14 35" src="https://github.com/rmdnps10/elice-PA/assets/87219998/1574768b-1f9d-4e7c-98a0-d741c5ddcfcc">
+<img width="1587" alt="스크린샷 2024-02-05 오전 8 14 35" src="https://github.com/rmdnps10/elice-PA/assets/87219998/1574768b-1f9d-4e7c-98a0-d741c5ddcfcc">
 
-  (1200px 이하)
-  <img width="1026" alt="스크린샷 2024-02-05 오전 8 15 33" src="https://github.com/rmdnps10/elice-PA/assets/87219998/f53d3739-39a3-4997-946b-b199bf937b1d">
-
-
-
+(1200px 이하)
+<img width="1026" alt="스크린샷 2024-02-05 오전 8 15 33" src="https://github.com/rmdnps10/elice-PA/assets/87219998/f53d3739-39a3-4997-946b-b199bf937b1d">
 
 ## 기능 정리
 
@@ -45,7 +40,7 @@
 
 - 페이지에 접속 시 자동으로 queryString이 설정되어 API 요청을 하고, 쿼리의 값에 따라 필터의 on/off 가 반영되게 구현하여 URL이 바껴도 필터가 유지되도록 구현하였습니다.
 
-- 페이지네이션을 구현하였으며, `window.scrollTopto` 를 통해 실제 홈페이지처럼 페이지가 바뀔 때 카드 리스트의 첫 부분에 스크롤이 오게 구현하였습니다. 또 필터가 바뀌거나 검색을 할 시에는 페이지 number를 1로 초기화하였습니다. 
+- 페이지네이션을 구현하였으며, 페이지네이션 컴포넌트를 누를 때마다 `window.scrollTopto` 를 실행하도록 하여 실제 홈페이지처럼 페이지가 바뀔 때 카드 리스트의 첫 부분에 스크롤이 오게 구현하였습니다. 또 필터가 바뀌거나 검색을 할 시에는 페이지 number를 1로 초기화하여 존재하지 않는 정보의 조회를 막았습니다.
 
 - `ResultCard`의 폭 조정과 section 단위 컴포넌트들의 padding 조절을 통해 `background-image` 가 과도하게 잘리지 않게 구현함으로써 반응형 스타일을 구현하였습니다.
 
@@ -53,6 +48,8 @@
 
 - 검색 결과가 없을 시 나오는 view를 구현하였습니다.
 
-## 시연 영상
+## 시연 영상 드라이브 링크
+
+https://drive.google.com/drive/folders/1S7T1QL3swoH6gSXvuEF9ksdFI09voqK5?usp=sharing
 
 

@@ -103,6 +103,11 @@ const PageNum = styled.div<{ $isActive: boolean }>`
   justify-content: center;
   margin: 0 0.8rem;
   padding: 0.1rem 0.6rem;
+  transition: background-color 0.15s ease 0s;
+  &:hover {
+    color: #524fa1;
+    font-weight: 600;
+  }
 `;
 
 export default PaginationList;

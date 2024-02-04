@@ -158,16 +158,21 @@ const FilterList = styled.div`
   flex-wrap: wrap;
 `;
 
-const FilterItem = styled.div<{ isSelected?: boolean }>`
+const FilterItem = styled.button<{ isSelected?: boolean }>`
+  all: unset;
   padding: 0.4rem 1.2rem;
   font-size: 1.4rem;
   margin: 0.8rem;
   line-height: 150%;
+  transition: all 150ms ease-in-out 0s;
   font-weight: 400;
   border-radius: 1.875rem;
   background: ${(props) => (props?.isSelected ? '#524fa1' : '#f0f1f3')};
   cursor: pointer;
   color: ${(props) => (props?.isSelected ? 'white' : '#5e5f61')};
+  &:hover {
+    filter: brightness(0.86);
+  }
 `;
 
 export default CategorySelectSection;

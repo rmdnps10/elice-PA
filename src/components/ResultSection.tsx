@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'api/instance';
-import ResultCard from './ResultCard';
-import PaginationList from './PaginationList';
+import ResultCard from './molecules/ResultCard';
+import PaginationList from './molecules/PaginationList';
 import { Course } from 'util/type';
 import { useRecoilValue } from 'recoil';
 import { pageNumAtom, searchTextAtom } from 'state/atom';
@@ -88,6 +88,9 @@ function ResultSection() {
 }
 
 const ResultSectionWrapper = styled.section`
+  @media (min-width: 1200px) {
+    padding: 2.4rem 6rem;
+  }
   padding: 2.4rem;
   background-color: #f0f1f3;
 `;

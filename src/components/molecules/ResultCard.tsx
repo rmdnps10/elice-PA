@@ -36,6 +36,9 @@ function ResultCard({ course }: ResultCardProps) {
 }
 
 const ResultCardWrapper = styled.div`
+  @media (min-width: 1200px) {
+    width: calc(25% - 2.4rem);
+  }
   width: calc(33.333% - 2.4rem);
   height: 38.4rem;
   border-radius: 0.4rem;

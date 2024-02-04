@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Space from 'util/Space';
 import { filterListByCategory } from 'util/filterListByCategory';
 import qs from 'query-string';
-import SearchInput from './SearchInput';
+import SearchInput from './molecules/SearchInput';
 import { useSetRecoilState } from 'recoil';
 import { pageNumAtom } from 'state/atom';
 
@@ -114,6 +114,9 @@ function CategorySelectSection() {
 }
 
 const CategorySelectSectionWrapper = styled.section`
+  @media (min-width: 1200px) {
+    padding: 2.4rem 6rem;
+  }
   padding: 2.4rem;
   background-color: #f0f1f3;
 `;

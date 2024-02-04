@@ -1,5 +1,5 @@
 import CategorySelectSection from 'components/CategorySelectSection';
-import Header from 'components/Header';
+import Header from 'components/molecules/Header';
 import ResultSection from 'components/ResultSection';
 import React from 'react';
 

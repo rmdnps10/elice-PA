@@ -19,27 +19,33 @@ function ResultSection() {
     const fetchData = async () => {
       try {
         const searchParams = new URLSearchParams(search);
-        const priceArray = [
-          searchParams.get('isFare'),
-          searchParams.get('isFree'),
-        ];
-        const orParams = priceArray.map((item) => {
-          return {
-            enroll_type: 0,
-            is_free: item,
-          };
-        });
+        const filterConditions = {
+          $and: [
+            { title: '%c언어%' },
+            {
+              $or: [
+                {
+                  enroll_type: 0,
+                  is_free: searchParams.get('isFare') === 'true' ? false : true,
+                },
+                {
+                  enroll_type: 0,
+                  is_free: searchParams.get('isFree') === 'true' ? true : false,
+                },
+              ],
+            },
+          ],
+        };
         const res = await axios.get(
           'https://api-rest.elice.io/org/academy/course/list/',
           {
             params: {
-              and: [{ title: '아메리카노' }, { or: orParams }],
-              offset: 20 * (pageNum - 1), // offset 값 수정
+              filter_conditions: JSON.stringify(filterConditions),
+              offset: 20 * (pageNum - 1),
               count: 20,
             },
           },
         );
-
         setTotalCount(res?.data?.course_count);
         setCourses(res?.data?.courses);
       } catch (err) {

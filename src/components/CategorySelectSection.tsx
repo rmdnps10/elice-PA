@@ -28,7 +28,6 @@ function CategorySelectSection() {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(search);
-    const priceArray = [searchParams.get('isFare'), searchParams.get('isFree')];
     setPriceFilter({
       isFree: searchParams.get('isFare') === 'true',
       isFare: searchParams.get('isFree') === 'true',

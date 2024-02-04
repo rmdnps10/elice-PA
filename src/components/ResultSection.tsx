@@ -31,12 +31,13 @@ function ResultSection() {
           'https://api-rest.elice.io/org/academy/course/list/',
           {
             params: {
-              and: [{ title: '' }, { or: JSON.stringify(orParams) }],
-              offset: 0 + 20 * (pageNum - 1),
+              and: [{ title: '' }, { or: orParams }],
+              offset: 20 * (pageNum - 1), // offset 값 수정
               count: 20,
             },
           },
         );
+
         setTotalCount(res?.data?.course_count);
         setCourses(res?.data?.courses);
       } catch (err) {

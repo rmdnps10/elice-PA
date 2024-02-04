@@ -4,41 +4,25 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Space from 'util/Space';
 import { filterListByCategory } from 'util/filterListByCategory';
-import { queryStringMaker } from 'util/queryStringMaker';
+import qs from 'query-string';
+
 function CategorySelectSection() {
-  const [filterList, setFilterList] = useState<any>({
-    courseType: [],
-    format: [],
-    category: [],
-    level: [],
-    programmingLanguage: [],
-    price: [],
-  });
   const { search } = useLocation();
-  const location = useLocation();
-  const handleClickFilter = (filterItem: string, category: string) => {
-    // URL 이동
-    // 필터 선택해제 하는 경우
-    if (filterList[category].includes(filterItem)) {
-      navigate(queryStringMaker('delete', search, filterItem));
-    }
-    // 필터 선택하는 경우
-    else {
-      navigate(queryStringMaker('add', search, filterItem));
-    }
-    // 필터 버튼 활성화
-    let copyArray = [...filterList[category]];
-    if (copyArray.includes(filterItem)) {
-      copyArray = copyArray.filter((item) => item !== filterItem);
-    } else {
-      copyArray = [...copyArray, filterItem];
-    }
-    setFilterList({
-      ...filterList,
-      [category]: copyArray,
-    });
-  };
   const navigate = useNavigate();
+  const [priceFilter, setPriceFilter] = useState({
+    isFree: false,
+    isFare: false,
+  });
+  const handleClickFilter = (item: string) => {
+    if (item === '유료') {
+      setPriceFilter({ ...priceFilter, isFare: !priceFilter.isFare });
+    } else {
+      setPriceFilter({ ...priceFilter, isFree: !priceFilter.isFree });
+    }
+  };
+  useEffect(() => {
+    navigate('?' + qs.stringify(priceFilter));
+  }, [priceFilter]);
   return (
     <>
       <Space height="6.4rem" />
@@ -52,15 +36,7 @@ function CategorySelectSection() {
             <FilterCategory>유형</FilterCategory>
             <FilterList>
               {filterListByCategory?.courseType.map((item) => (
-                <FilterItem
-                  key={item}
-                  onClick={() => {
-                    handleClickFilter(item, 'courseType');
-                  }}
-                  isSelected={filterList.courseType.includes(item)}
-                >
-                  {item}
-                </FilterItem>
+                <FilterItem key={item}>{item}</FilterItem>
               ))}
             </FilterList>
           </FilterBoxRow>
@@ -68,15 +44,7 @@ function CategorySelectSection() {
             <FilterCategory>진행방식</FilterCategory>
             <FilterList>
               {filterListByCategory?.format.map((item) => (
-                <FilterItem
-                  key={item}
-                  onClick={() => {
-                    handleClickFilter(item, 'format');
-                  }}
-                  isSelected={filterList.format.includes(item)}
-                >
-                  {item}
-                </FilterItem>
+                <FilterItem key={item}>{item}</FilterItem>
               ))}
             </FilterList>
           </FilterBoxRow>
@@ -84,15 +52,7 @@ function CategorySelectSection() {
             <FilterCategory>분야</FilterCategory>
             <FilterList>
               {filterListByCategory?.category.map((item) => (
-                <FilterItem
-                  key={item}
-                  onClick={() => {
-                    handleClickFilter(item, 'category');
-                  }}
-                  isSelected={filterList.category.includes(item)}
-                >
-                  {item}
-                </FilterItem>
+                <FilterItem key={item}>{item}</FilterItem>
               ))}
             </FilterList>
           </FilterBoxRow>
@@ -108,15 +68,7 @@ function CategorySelectSection() {
             <FilterCategory>언어</FilterCategory>
             <FilterList>
               {filterListByCategory?.programmingLanguage.map((item) => (
-                <FilterItem
-                  key={item}
-                  onClick={() => {
-                    handleClickFilter(item, 'programmingLanguage');
-                  }}
-                  isSelected={filterList.programmingLanguage.includes(item)}
-                >
-                  {item}
-                </FilterItem>
+                <FilterItem key={item}>{item}</FilterItem>
               ))}
             </FilterList>
           </FilterBoxRow>
@@ -127,9 +79,15 @@ function CategorySelectSection() {
                 <FilterItem
                   key={item}
                   onClick={() => {
-                    handleClickFilter(item, 'price');
+                    handleClickFilter(item);
                   }}
-                  isSelected={filterList.price.includes(item)}
+                  isSelected={
+                    item === '유료'
+                      ? priceFilter?.isFare
+                      : item === '무료'
+                        ? priceFilter?.isFree
+                        : false
+                  }
                 >
                   {item}
                 </FilterItem>

@@ -5,54 +5,60 @@ import ResultCard from './ResultCard';
 import PaginationList from './PaginationList';
 import { Course } from 'util/type';
 import { useRecoilValue } from 'recoil';
-import { pageNumAtom } from 'state/atom';
+import { pageNumAtom, searchTextAtom } from 'state/atom';
 import Space from 'util/Space';
 import { useLocation } from 'react-router-dom';
+import useDebounce from 'hook/useDebounce';
 
 function ResultSection() {
   const [totalCount, setTotalCount] = useState<number | undefined>();
   const [courses, setCourses] = useState<Course[]>();
   const pageNum = useRecoilValue(pageNumAtom);
   const { search } = useLocation();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const searchParams = new URLSearchParams(search);
-        const filterConditions = {
-          $and: [
-            { title: '%c언어%' },
-            {
-              $or: [
-                {
-                  enroll_type: 0,
-                  is_free: searchParams.get('isFare') === 'true' ? false : true,
-                },
-                {
-                  enroll_type: 0,
-                  is_free: searchParams.get('isFree') === 'true' ? true : false,
-                },
-              ],
-            },
-          ],
-        };
-        const res = await axios.get(
-          'https://api-rest.elice.io/org/academy/course/list/',
+  const searchText = useRecoilValue(searchTextAtom);
+  const fetchData = async () => {
+    try {
+      const searchParams = new URLSearchParams(search);
+      const filterConditions = {
+        $and: [
+          { title: `%${searchText}%` },
           {
-            params: {
-              filter_conditions: JSON.stringify(filterConditions),
-              offset: 20 * (pageNum - 1),
-              count: 20,
-            },
+            $or: [
+              {
+                enroll_type: 0,
+                is_free: searchParams.get('isFare') === 'true' ? false : true,
+              },
+              {
+                enroll_type: 0,
+                is_free: searchParams.get('isFree') === 'true' ? true : false,
+              },
+            ],
           },
-        );
-        setTotalCount(res?.data?.course_count);
-        setCourses(res?.data?.courses);
-      } catch (err) {
-        alert('Error!');
-      }
-    };
+        ],
+      };
+      const res = await axios.get(
+        'https://api-rest.elice.io/org/academy/course/list/',
+        {
+          params: {
+            filter_conditions: JSON.stringify(filterConditions),
+            offset: 20 * (pageNum - 1),
+            count: 20,
+          },
+        },
+      );
+      setTotalCount(res?.data?.course_count);
+      setCourses(res?.data?.courses);
+    } catch (err) {
+      alert('Error!');
+    }
+  };
+  useEffect(() => {
     fetchData();
   }, [pageNum, search]);
+  const debounceFunc = useDebounce(fetchData, 1000);
+  useEffect(() => {
+    debounceFunc();
+  }, [searchText]);
   return (
     <ResultSectionWrapper>
       <TotalCount>전체 {totalCount}개</TotalCount>

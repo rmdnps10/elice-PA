@@ -4,19 +4,22 @@ export const queryStringMaker = (
   filterItem: string,
 ) => {
   if (type === 'delete') {
-    if (filterItem === '무료') {
-      const updatedQueryString = searchUrl
-        .split('&')
-        .filter((param) => !param.includes('free'))
-        .join('&');
-      return updatedQueryString === '' ? '/' : updatedQueryString;
-    } else if (filterItem === '유료') {
+    if (filterItem === '유료') {
+      console.log('hello2');
       const updatedQueryString = searchUrl
         .split('&')
         .filter((param) => !param.includes('fare'))
         .join('&');
-      return updatedQueryString === '' ? '/' : updatedQueryString;
+      return updatedQueryString === '' ? '/?' : `/?${updatedQueryString}`;
+    } else if (filterItem === '무료') {
+      console.log('hello1');
+      const updatedQueryString = searchUrl
+        .split('&')
+        .filter((param) => !param.includes('free'))
+        .join('&');
+      return updatedQueryString === '' ? '/?' : `/?${updatedQueryString}`;
     } else {
+      console.log('hello');
       return '/' + searchUrl;
     }
   } else if (type === 'add') {

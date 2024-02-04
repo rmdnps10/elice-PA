@@ -7,18 +7,31 @@ import { Course } from 'util/type';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { pageNumAtom } from 'state/atom';
 import Space from 'util/Space';
+import { useLocation } from 'react-router-dom';
+import { serialize } from 'v8';
 
 function ResultSection() {
   const [totalCount, setTotalCount] = useState<number | undefined>();
   const [courses, setCourses] = useState<Course[]>();
   const [pageNum, setPageNum] = useRecoilState(pageNumAtom);
+  const { search } = useLocation();
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const urlSearch = new URLSearchParams(search);
+
+        const orParams = urlSearch?.getAll('price')?.map((item) => {
+          return {
+            enroll_type: 0,
+            is_free: item === 'free' ? 'true' : 'false',
+          };
+        });
+        console.log(orParams);
         const res = await axios.get(
           'https://api-rest.elice.io/org/academy/course/list/',
           {
             params: {
+              and: [{ title: '' }, { or: JSON.stringify(orParams) }],
               offset: 0 + 20 * (pageNum - 1),
               count: 20,
             },
@@ -31,7 +44,7 @@ function ResultSection() {
       }
     };
     fetchData();
-  }, [pageNum]);
+  }, [pageNum, search]);
   return (
     <ResultSectionWrapper>
       <TotalCount>전체 {totalCount}개</TotalCount>

@@ -16,7 +16,6 @@ function CategorySelectSection() {
   });
   const { search } = useLocation();
   const location = useLocation();
-  console.log(location);
   const handleClickFilter = (filterItem: string, category: string) => {
     // URL 이동
     // 필터 선택해제 하는 경우

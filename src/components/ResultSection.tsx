@@ -60,6 +60,9 @@ function ResultSection() {
   useEffect(() => {
     debounceFunc();
   }, [searchText]);
+  useEffect(() => {
+    window.scrollTo(0, 500);
+  }, [pageNum]);
   return (
     <ResultSectionWrapper>
       <Space height="2.4rem" />
@@ -74,7 +77,7 @@ function ResultSection() {
                 {courses?.map((item: Course) => (
                   <ResultCard key={item?.id} course={item} />
                 ))}
-              </ResultCardList>{' '}
+              </ResultCardList>
               <PaginationList totalCount={totalCount} />
             </>
           )}

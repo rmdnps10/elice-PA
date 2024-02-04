@@ -14,7 +14,6 @@ function PaginationList({ totalCount }: PaginationProps) {
   const pageCount = Math.ceil(totalCount / 20);
   const pages = Array.from({ length: pageCount }, (_, index) => index + 1);
   const [pageNum, setPageNum] = useRecoilState(pageNumAtom);
-  console.log(pageNum, pageCount);
   return (
     <PaginationListWrapper>
       {pageNum === 1 ? (

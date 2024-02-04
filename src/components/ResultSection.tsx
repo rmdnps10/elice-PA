@@ -4,14 +4,14 @@ import axios from 'api/instance';
 import ResultCard from './ResultCard';
 import PaginationList from './PaginationList';
 import { Course } from 'util/type';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { pageNumAtom } from 'state/atom';
 import Space from 'util/Space';
 
 function ResultSection() {
   const [totalCount, setTotalCount] = useState<number | undefined>();
   const [courses, setCourses] = useState<Course[]>();
-  const setPageNum = useSetRecoilState(pageNumAtom);
+  const [pageNum, setPageNum] = useRecoilState(pageNumAtom);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -19,20 +19,19 @@ function ResultSection() {
           'https://api-rest.elice.io/org/academy/course/list/',
           {
             params: {
-              offset: 0,
+              offset: 0 + 20 * (pageNum - 1),
               count: 20,
             },
           },
         );
         setTotalCount(res?.data?.course_count);
         setCourses(res?.data?.courses);
-        setPageNum(1);
       } catch (err) {
         alert('Error!');
       }
     };
     fetchData();
-  }, []);
+  }, [pageNum]);
   return (
     <ResultSectionWrapper>
       <TotalCount>전체 {totalCount}개</TotalCount>

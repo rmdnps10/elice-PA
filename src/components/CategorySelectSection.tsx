@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Space from 'util/Space';
 import { filterListByCategory } from 'util/filterListByCategory';
+import { queryStringMaker } from 'util/queryStringMaker';
 function CategorySelectSection() {
   const [filterList, setFilterList] = useState<any>({
     courseType: [],
@@ -12,13 +14,24 @@ function CategorySelectSection() {
     programmingLanguage: [],
     price: [],
   });
+  const { search } = useLocation();
+  const location = useLocation();
+  console.log(location);
   const handleClickFilter = (filterItem: string, category: string) => {
+    // URL 이동
+    // 필터 선택해제 하는 경우
+    if (filterList[category].includes(filterItem)) {
+      navigate(queryStringMaker('delete', search, filterItem));
+    }
+    // 필터 선택하는 경우
+    else {
+      navigate(queryStringMaker('add', search, filterItem));
+    }
+    // 필터 버튼 활성화
     let copyArray = [...filterList[category]];
     if (copyArray.includes(filterItem)) {
-      // copyArray 배열에서 filterItem을 삭제
       copyArray = copyArray.filter((item) => item !== filterItem);
     } else {
-      // copyArray에서 filterItem을 추가
       copyArray = [...copyArray, filterItem];
     }
     setFilterList({
@@ -26,6 +39,7 @@ function CategorySelectSection() {
       [category]: copyArray,
     });
   };
+  const navigate = useNavigate();
   return (
     <>
       <Space height="6.4rem" />

@@ -16,13 +16,36 @@ function PaginationList({ totalCount }: PaginationProps) {
   const [pageNum, setPageNum] = useRecoilState(pageNumAtom);
   return (
     <PaginationListWrapper>
-      <LeftArrowIcon />
+      {pageNum === 1 ? (
+        <LeftArrowIconInactive />
+      ) : (
+        <LeftArrowIcon
+          onClick={() => {
+            setPageNum(pageNum - 1);
+          }}
+        />
+      )}
+
       {pages.slice(0, 5).map((page) => (
-        <PageNum key={page} $isActive={true}>
+        <PageNum
+          key={page}
+          $isActive={page === pageNum}
+          onClick={() => {
+            setPageNum(page);
+          }}
+        >
           {page}
         </PageNum>
       ))}
-      <RightArrowIcon />
+      {pageNum === pageCount ? (
+        <RightArrowIconInactive />
+      ) : (
+        <RightArrowIcon
+          onClick={() => {
+            setPageNum(pageNum + 1);
+          }}
+        />
+      )}
     </PaginationListWrapper>
   );
 }
@@ -34,13 +57,23 @@ const PaginationListWrapper = styled.div`
 `;
 
 const LeftArrowIcon = styled(LeftArrow)`
-  width: 1.4rem;
-  color: red;
+  width: 1.1rem;
+  cursor: pointer;
+  margin: 0 0.6rem 0 0;
+`;
+
+const LeftArrowIconInactive = styled(LeftArrowInactive)`
+  width: 1.1rem;
   cursor: pointer;
   margin: 0 0.6rem 0 0;
 `;
 const RightArrowIcon = styled(RightArrow)`
-  width: 1.4rem;
+  width: 1.1rem;
+  cursor: pointer;
+  margin: 0 0 0 0.6rem;
+`;
+const RightArrowIconInactive = styled(RightArrowIcon)`
+  width: 1.1rem;
   cursor: pointer;
   margin: 0 0 0 0.6rem;
 `;
@@ -57,7 +90,7 @@ const PageNum = styled.div<{ $isActive: boolean }>`
   display: inline-flex;
   font-size: 1.4rem;
   justify-content: center;
-  margin: 0 1.2rem;
+  margin: 0 0.8rem;
   padding: 0.1rem 0.6rem;
 `;
 

@@ -4,13 +4,14 @@ import axios from 'api/instance';
 import ResultCard from './ResultCard';
 import PaginationList from './PaginationList';
 import { Course } from 'util/type';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { pageNumAtom } from 'state/atom';
 import Space from 'util/Space';
 
 function ResultSection() {
   const [totalCount, setTotalCount] = useState<number | undefined>();
   const [courses, setCourses] = useState<Course[]>();
+  const setPageNum = useSetRecoilState(pageNumAtom);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,6 +26,7 @@ function ResultSection() {
         );
         setTotalCount(res?.data?.course_count);
         setCourses(res?.data?.courses);
+        setPageNum(1);
       } catch (err) {
         alert('Error!');
       }

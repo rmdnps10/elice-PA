@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Space from 'util/Space';
 import { filterListByCategory } from 'util/filterListByCategory';
-
 function CategorySelectSection() {
   const [filterList, setFilterList] = useState<any>({
     courseType: [],

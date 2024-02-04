@@ -1,14 +1,38 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import axios from 'api/instance';
 import ResultCard from './ResultCard';
+import { Course } from 'util/type';
 
 function ResultSection() {
+  const [totalCount, setTotalCount] = useState<number>();
+  const [courses, setCourses] = useState<Course[]>();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(
+          'https://api-rest.elice.io/org/academy/course/list/',
+          {
+            params: {
+              offset: 0,
+              count: 20,
+            },
+          },
+        );
+        setTotalCount(res?.data?.course_count);
+        setCourses(res?.data?.courses);
+      } catch (err) {
+        alert('Error!');
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <ResultSectionWrapper>
-      <TotalCount>전체 221개</TotalCount>
+      <TotalCount>전체 {totalCount}개</TotalCount>
       <ResultCardList>
-        {new Array(10).fill(0).map((item, index) => (
-          <ResultCard key={index} />
+        {courses?.map((item: Course) => (
+          <ResultCard key={item?.id} course={item} />
         ))}
       </ResultCardList>
     </ResultSectionWrapper>

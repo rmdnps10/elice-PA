@@ -5,6 +5,8 @@ import Space from 'util/Space';
 import { filterListByCategory } from 'util/filterListByCategory';
 import qs from 'query-string';
 import SearchInput from './SearchInput';
+import { useSetRecoilState } from 'recoil';
+import { pageNumAtom } from 'state/atom';
 
 function CategorySelectSection() {
   const { search } = useLocation();
@@ -13,12 +15,14 @@ function CategorySelectSection() {
     isFree: false,
     isFare: false,
   });
-  const [text, setText] = useState('');
+  const setPageNum = useSetRecoilState(pageNumAtom);
   const handleClickFilter = (item: string) => {
     if (item === '유료') {
       setPriceFilter({ ...priceFilter, isFare: !priceFilter.isFare });
+      setPageNum(1);
     } else if (item === '무료') {
       setPriceFilter({ ...priceFilter, isFree: !priceFilter.isFree });
+      setPageNum(1);
     } else {
       return;
     }
